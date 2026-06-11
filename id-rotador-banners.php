@@ -120,6 +120,14 @@ function idrb_clear_update_cache( $upgrader, $hook_extra ) {
 }
 add_action( 'upgrader_process_complete', 'idrb_clear_update_cache', 10, 2 );
 
+// "Comprobar de nuevo" en Escritorio → Actualizaciones fuerza una consulta fresca a GitHub.
+function idrb_force_check() {
+	if ( isset( $_GET['force-check'] ) ) {
+		delete_site_transient( 'idrb_remote_version' );
+	}
+}
+add_action( 'load-update-core.php', 'idrb_force_check' );
+
 /* -------------------------------------------------------------------------
  * Tipo de contenido: Banner
  * ---------------------------------------------------------------------- */
