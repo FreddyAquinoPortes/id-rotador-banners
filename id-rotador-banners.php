@@ -3,7 +3,7 @@
  * Plugin Name:       ID Rotador de Banners
  * Plugin URI:        https://github.com/FreddyAquinoPortes/id-rotador-banners
  * Description:       Rotador de banners ligero para el Instituto Duartiano. Banners que rotan automáticamente, con enlace opcional (interno o externo) por banner, e importador de sliders antiguos de Slider Revolution.
- * Version:           1.1.1
+ * Version:           1.2.0
  * Author:            Instituto Duartiano
  * License:           GPL-2.0-or-later
  * Text Domain:       id-rotador-banners
@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'IDRB_VERSION', '1.1.1' );
+define( 'IDRB_VERSION', '1.2.0' );
 define( 'IDRB_GITHUB_REPO', 'FreddyAquinoPortes/id-rotador-banners' );
 
 /* -------------------------------------------------------------------------
@@ -211,6 +211,7 @@ function idrb_shortcode( $atts ) {
 	$atts = shortcode_atts( array(
 		'grupo'     => '',
 		'alto'      => '450',
+		'ratio'     => '',
 		'intervalo' => '5000',
 		'flechas'   => '1',
 		'puntos'    => '1',
@@ -238,14 +239,22 @@ function idrb_shortcode( $atts ) {
 
 	idrb_enqueue_assets();
 
-	$id   = 'idrb-' . wp_unique_id();
-	$alto = max( 100, (int) $atts['alto'] );
+	$id = 'idrb-' . wp_unique_id();
+
+	// alto="auto" + ratio="1996/640" (o "1996:640"): la altura se adapta al ancho
+	// manteniendo la proporción de la imagen. Si no, altura fija en píxeles.
+	$ratio = preg_replace( '/[^0-9.\/]/', '', str_replace( ':', '/', $atts['ratio'] ) );
+	if ( 'auto' === $atts['alto'] && $ratio ) {
+		$estilo = 'aspect-ratio:' . $ratio . ';height:auto';
+	} else {
+		$estilo = 'height:' . max( 100, (int) $atts['alto'] ) . 'px';
+	}
 
 	ob_start();
 	?>
 	<div class="idrb-slider" id="<?php echo esc_attr( $id ); ?>"
 		data-interval="<?php echo esc_attr( max( 1000, (int) $atts['intervalo'] ) ); ?>"
-		style="height:<?php echo esc_attr( $alto ); ?>px"
+		style="<?php echo esc_attr( $estilo ); ?>"
 		role="region" aria-label="<?php esc_attr_e( 'Carrusel de banners', 'id-rotador-banners' ); ?>">
 		<?php foreach ( $banners as $i => $banner ) :
 			$img = get_the_post_thumbnail_url( $banner, 'full' );

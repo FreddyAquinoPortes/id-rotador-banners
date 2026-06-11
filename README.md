@@ -42,7 +42,8 @@ Con opciones:
 | Atributo | Qué hace | Por defecto |
 |---|---|---|
 | `grupo` | Slug del grupo de banners a mostrar (vacío = todos) | todos |
-| `alto` | Alto del rotador en píxeles | 450 |
+| `alto` | Alto del rotador en píxeles, o `auto` para altura proporcional (requiere `ratio`) | 450 |
+| `ratio` | Proporción ancho/alto de las imágenes cuando `alto="auto"`, p. ej. `1996/640` | — |
 | `intervalo` | Milisegundos entre cambios de banner | 5000 |
 | `flechas` | Mostrar flechas anterior/siguiente (1 o 0) | 1 |
 | `puntos` | Mostrar puntos de navegación (1 o 0) | 1 |
