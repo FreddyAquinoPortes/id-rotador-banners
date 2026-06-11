@@ -3,7 +3,7 @@
  * Plugin Name:       ID Rotador de Banners
  * Plugin URI:        https://github.com/FreddyAquinoPortes/id-rotador-banners
  * Description:       Rotador de banners ligero para el Instituto Duartiano. Banners que rotan automáticamente, con enlace opcional (interno o externo) por banner, e importador de sliders antiguos de Slider Revolution.
- * Version:           1.1.0
+ * Version:           1.1.1
  * Author:            Instituto Duartiano
  * License:           GPL-2.0-or-later
  * Text Domain:       id-rotador-banners
@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'IDRB_VERSION', '1.1.0' );
+define( 'IDRB_VERSION', '1.1.1' );
 define( 'IDRB_GITHUB_REPO', 'FreddyAquinoPortes/id-rotador-banners' );
 
 /* -------------------------------------------------------------------------
